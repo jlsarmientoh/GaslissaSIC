@@ -1,0 +1,43 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Exportador_Ventas_ServP.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="nombreEDS" Type="System.String" Scope="User">
+      <Value Profile="(Default)">El Pino</Value>
+    </Setting>
+    <Setting Name="Direccion" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Calle 73 # 12 - 98</Value>
+    </Setting>
+    <Setting Name="NombreDiesel" Type="System.String" Scope="User">
+      <Value Profile="(Default)">DIESEL</Value>
+    </Setting>
+    <Setting Name="NombreSuper" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SUPER</Value>
+    </Setting>
+    <Setting Name="NombreCorriente" Type="System.String" Scope="User">
+      <Value Profile="(Default)">CORRIENTE</Value>
+    </Setting>
+    <Setting Name="CentroCostos" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0901</Value>
+    </Setting>
+    <Setting Name="grupoIsla" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;1,2&lt;/string&gt;
+  &lt;string&gt;3,4&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="NITEDS" Type="System.String" Scope="User">
+      <Value Profile="(Default)">830.051.180-7</Value>
+    </Setting>
+    <Setting Name="telefonoEDS" Type="System.String" Scope="User">
+      <Value Profile="(Default)">3107855</Value>
+    </Setting>
+    <Setting Name="codigoCIIU" Type="System.String" Scope="User">
+      <Value Profile="(Default)">4731</Value>
+    </Setting>
+    <Setting Name="DiferenciaSaldoDisposicion" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">-2000</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
