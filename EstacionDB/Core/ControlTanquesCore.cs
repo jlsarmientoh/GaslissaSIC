@@ -5,6 +5,7 @@ using EstacionDB.VO;
 using EstacionDB.DTO;
 using EstacionDB.DAO;
 using EstacionDB.Exceptions;
+using EstacionDB.Utilidades;
 
 namespace EstacionDB.Core
 {
@@ -53,7 +54,10 @@ namespace EstacionDB.Core
                         //Corriente
                         case 1:
                             {
-                                controlCorriente = existeControl(idProd, fecha);                                
+                                if (controlCorriente == null)
+                                {
+                                    controlCorriente = existeControl(idProd, fecha);
+                                }
                                 controlCorriente.InventarioFinal += (int)lecturas[i].Galones;
                                 isCorriente = true;
                                 break;
@@ -61,7 +65,10 @@ namespace EstacionDB.Core
                         //Super
                         case 2:
                             {
-                                controlSuper = existeControl(idProd, fecha);
+                                if (controlSuper == null)
+                                {
+                                    controlSuper = existeControl(idProd, fecha);
+                                }
                                 controlSuper.InventarioFinal += (int)lecturas[i].Galones;
                                 isSuper = true;
                                 break;
@@ -69,7 +76,10 @@ namespace EstacionDB.Core
                         //Diesel
                         case 3:
                             {
-                                controlDiesel = existeControl(idProd, fecha);
+                                if (controlDiesel == null)
+                                {
+                                    controlDiesel = existeControl(idProd, fecha);
+                                }
                                 controlDiesel.InventarioFinal += (int)lecturas[i].Galones;
                                 isDiesel = true;
                                 break;
@@ -88,8 +98,10 @@ namespace EstacionDB.Core
                     controlCorriente.VentaSurtidor = (int)this.consultarVentaProducto(fecha, fecha, 1);
                     controlCorriente.SobranteDia = controlCorriente.VentaSurtidor - controlCorriente.VentaMedida;
                     controlCorriente.SobranteAcumulado = controlCorriente.SobranteDia + (int)this.consultarAcumuladoAnterior(1, diaAnterior, diaAnterior);
-                    controlCorriente.Procentaje = (double)(((double)controlCorriente.SobranteDia / (double)(controlCorriente.GalonesCompra + controlCorriente.InventarioInicial)) * 100);
-
+                    controlCorriente.Procentaje = Utilidades.Utilidades.redondearPosicionesDecimales(
+                        (double)(((double)controlCorriente.SobranteDia / (double)(controlCorriente.GalonesCompra + controlCorriente.InventarioInicial)) * 100)
+                        );
+                    
                     rows += this.guardarControlCombustible(controlCorriente);
                 }
 
@@ -104,7 +116,9 @@ namespace EstacionDB.Core
                     controlSuper.VentaSurtidor = (int)this.consultarVentaProducto(fecha, fecha, 2);
                     controlSuper.SobranteDia = controlSuper.VentaSurtidor - controlSuper.VentaMedida;
                     controlSuper.SobranteAcumulado = controlSuper.SobranteDia + (int)this.consultarAcumuladoAnterior(2, diaAnterior, diaAnterior);
-                    controlSuper.Procentaje = (double)(((double)controlSuper.SobranteDia / (double)(controlSuper.GalonesCompra + controlSuper.InventarioInicial)) * 100);
+                    controlSuper.Procentaje = Utilidades.Utilidades.redondearPosicionesDecimales(
+                        (double)(((double)controlSuper.SobranteDia / (double)(controlSuper.GalonesCompra + controlSuper.InventarioInicial)) * 100)
+                        );
 
                     rows += this.guardarControlCombustible(controlSuper);
                 }
@@ -120,7 +134,9 @@ namespace EstacionDB.Core
                     controlDiesel.VentaSurtidor = (int)this.consultarVentaProducto(fecha, fecha, 3);
                     controlDiesel.SobranteDia = controlDiesel.VentaSurtidor - controlDiesel.VentaMedida;
                     controlDiesel.SobranteAcumulado = controlDiesel.SobranteDia + (int)this.consultarAcumuladoAnterior(3, diaAnterior, diaAnterior);
-                    controlDiesel.Procentaje = (double)(((double)controlDiesel.SobranteDia / (double)(controlDiesel.GalonesCompra + controlDiesel.InventarioInicial)) * 100);
+                    controlDiesel.Procentaje = Utilidades.Utilidades.redondearPosicionesDecimales(
+                        (double)(((double)controlDiesel.SobranteDia / (double)(controlDiesel.GalonesCompra + controlDiesel.InventarioInicial)) * 100)
+                        );
 
                     rows += this.guardarControlCombustible(controlDiesel);
                 }
@@ -148,7 +164,9 @@ namespace EstacionDB.Core
                     cc.VentaSurtidor = (int)this.consultarVentaProducto(cc.Fecha, cc.Fecha, idProducto);
                     cc.SobranteDia = cc.VentaSurtidor - cc.VentaMedida;
                     cc.SobranteAcumulado = cc.SobranteDia + (int)this.consultarAcumuladoAnterior(idProducto, diaAnterior, diaAnterior);
-                    cc.Procentaje = (double)(((double)cc.SobranteDia / (double)(cc.GalonesCompra + cc.InventarioInicial)) * 100);
+                    cc.Procentaje = Utilidades.Utilidades.redondearPosicionesDecimales(
+                        (double)(((double)cc.SobranteDia / (double)(cc.GalonesCompra + cc.InventarioInicial)) * 100)
+                        );
 
                     this.guardarControlCombustible(cc);
                 }
@@ -322,7 +340,13 @@ namespace EstacionDB.Core
         {
             try
             {
-                return controlCombustibleDAO.consultarControl(idProducto, fecha);
+                ControlCombustibleVO vo = controlCombustibleDAO.consultarControl(idProducto, fecha);
+                if (vo == null)
+                {
+                    vo = new ControlCombustibleVO();
+                }
+
+                return vo;
             }
             catch (EstacionDBException ex)
             {

@@ -118,6 +118,24 @@ namespace EstacionDB.Utilidades
             return b;
         }
 
+        public static double redondearPosicionesDecimales(double a)
+        {
+            double b = 0;
+            decimal valorRedondeado = 0;
+
+            try
+            {
+                valorRedondeado = Math.Round(Convert.ToDecimal(a), 2);
+
+                b = Convert.ToDouble(valorRedondeado);
+            }
+            catch (OverflowException ex)
+            {
+                //TODO meter algun mensaje de error
+            }
+            return b;
+        }
+
         public static string formatearDecimal(double valor)
         {
             return String.Format("{0,10:#,0.00}", valor);
